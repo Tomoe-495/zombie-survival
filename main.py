@@ -23,7 +23,7 @@ def main():
     def draw(win):
         win.fill((180, 0, 60))
 
-        player.draw(win)
+        player.draw(win, tile.scroll)
         tile.draw(win)
 
         pygame.display.update()
@@ -57,6 +57,8 @@ def main():
 
         player.update(movement)
         player.platformer(movement, tile.tiles)
+
+        tile.camera(player)
 
 
 if __name__ == "__main__":

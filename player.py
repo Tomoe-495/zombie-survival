@@ -5,7 +5,7 @@ class Player:
     def __init__(self):
         self.x = 100
         self.y = 100
-        self.image = pygame.Surface((20,30))
+        self.image = pygame.Surface((30,50))
         self.rect = pygame.Rect(self.x, self.y, self.image.get_width(), self.image.get_height())
         self.right = False
         self.left = False
@@ -18,8 +18,8 @@ class Player:
         self.jump_limit = 1
         self.jump_power = -6
     
-    def draw(self, win):
-        win.blit(self.image, (self.rect.x, self.rect.y))
+    def draw(self, win, scroll):
+        win.blit(self.image, (self.rect.x - scroll[0], self.rect.y - scroll[1]))
 
     def jump(self):
         if self.jump_count < self.jump_limit:
