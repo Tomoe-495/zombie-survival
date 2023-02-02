@@ -19,7 +19,12 @@ class Player:
         self.jump_power = -7
     
     def draw(self, win, scroll):
-        win.blit(self.image, (self.rect.x - scroll[0], self.rect.y - scroll[1]))
+        from main import scene_position_to_view_port_position
+        projected_position = scene_position_to_view_port_position( self.rect[:2] )  
+        win.blit(
+            self.image, 
+            projected_position
+        )
 
     def jump(self):
         if self.jump_count < self.jump_limit:

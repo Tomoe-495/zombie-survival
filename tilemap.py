@@ -36,9 +36,16 @@ class Tiledmap:
             x = 0
     
     def draw(self, win):
+        from main import scene_position_to_view_port_position
         for tile in self.tiles:
-            if screen_check(tile, self.scroll):
-                pygame.draw.rect(win, self.color, (tile.x - self.scroll[0], tile.y - self.scroll[1], tile.width, tile.height))
+
+
+            #if screen_check(tile, self.scroll): # I skip this for now. It doesn't seem to work after refactor.
+                                                 # It might even be so we do not need it. the code might take more time to make a screen check
+                                                 # for every tile instead of just draw some of them outside. pygame might even ignore outside rects 
+            if True: 
+                projected_position = scene_position_to_view_port_position( (tile.x,tile.y) )  
+                pygame.draw.rect(win, self.color, ( *projected_position, tile.width, tile.height))
 
     def camera(self, pl):
         speed = 10
