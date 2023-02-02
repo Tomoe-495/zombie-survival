@@ -6,6 +6,17 @@ def get_map(name):
         f = f.read()
         return f.split('\n')
 
+def screen_check(rect, scroll):
+    if rect.x - scroll[0] < -rect.width:
+        return False
+    elif rect.x -scroll[0] > W: 
+        return False
+    elif rect.y - scroll[1] < -rect.width:
+        return False
+    elif rect.y - scroll[1] > H:
+        return False
+    return True
+
 class Tiledmap:
     def __init__(self):
         self.color = (255,255,255)
@@ -23,10 +34,11 @@ class Tiledmap:
                 x += self.size
             y += self.size
             x = 0
-        
+    
     def draw(self, win):
         for tile in self.tiles:
-            pygame.draw.rect(win, self.color, (tile.x - self.scroll[0], tile.y - self.scroll[1], tile.width, tile.height))
+            if screen_check(tile, self.scroll):
+                pygame.draw.rect(win, self.color, (tile.x - self.scroll[0], tile.y - self.scroll[1], tile.width, tile.height))
 
     def camera(self, pl):
         speed = 10

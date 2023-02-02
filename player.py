@@ -15,8 +15,8 @@ class Player:
         self.acc = 0.5
         self.ACC = 0.4
         self.jump_count = 0
-        self.jump_limit = 1
-        self.jump_power = -6
+        self.jump_limit = 9
+        self.jump_power = -7
     
     def draw(self, win, scroll):
         win.blit(self.image, (self.rect.x - scroll[0], self.rect.y - scroll[1]))
@@ -51,4 +51,3 @@ class Player:
         if collisions["bottom"]:
             self.vel = 0
             self.jump_count = 0
-
