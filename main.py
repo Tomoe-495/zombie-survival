@@ -4,9 +4,9 @@ from player import Player
 import tilemap
 
 
-W, H = 600, 400
+W, H = 700, 400
 FPS = 60
-SCALE = 2
+SCALE = 1.7
 
 pygame.init()
 clock = pygame.time.Clock()
