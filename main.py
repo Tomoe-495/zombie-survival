@@ -1,5 +1,6 @@
 import pygame
 import sys
+from drawing import draw
 
 W, H = 1000, 400
 FPS = 60
@@ -16,6 +17,8 @@ def main():
 
     while run:
         clock.tick(FPS)
+
+        draw(win)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
