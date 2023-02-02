@@ -4,13 +4,15 @@ from player import Player
 import tilemap
 
 
-W, H = 1000, 400
+W, H = 600, 400
 FPS = 60
+SCALE = 2
 
 pygame.init()
 clock = pygame.time.Clock()
 
-win = pygame.display.set_mode((W, H), 0, 32)
+win = pygame.display.set_mode((W*SCALE, H*SCALE), 0, 32)
+canvas = pygame.Surface( ( W, H ) )
 pygame.display.set_caption("Survival")
 
 
@@ -32,14 +34,16 @@ def main():
     while run:
         clock.tick(FPS)
 
-        draw(win)
+        draw(canvas)
+        win.blit( pygame.transform.scale( canvas, win.get_size() ), (0,0) )
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-                sys.exit()
             
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    run = False
                 if event.key == pygame.K_LEFT:
                     player.left = True
                 if event.key == pygame.K_RIGHT:
@@ -60,6 +64,8 @@ def main():
 
         tile.camera(player)
 
+
+    sys.exit()
 
 if __name__ == "__main__":
     main()
