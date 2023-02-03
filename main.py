@@ -77,6 +77,7 @@ def main():
         player.update(movement)
         player.platformer(movement, tile.tiles)
 
+        Camera.step()
         #tile.camera(player)
 
 
