@@ -23,8 +23,11 @@ def get_tile_imgs(game_map, size, obj, img_name):
     return IMGs
 
 def drawing_layers(win, lis, scroll):
+    from main import scene_position_to_view_port_position
     for tile in lis:
-        win.blit(tile[0], (tile[1][0] - scroll[0], tile[1][1] - scroll[1]))
+        projected_position = scene_position_to_view_port_position( (tile[1][0],tile[1][1]) )  
+        win.blit(tile[0], projected_position )
+        #win.blit(tile[0], (tile[1][0] - scroll[0], tile[1][1] - scroll[1]))
 
 class Tiledmap:
     def __init__(self):
@@ -55,6 +58,14 @@ class Tiledmap:
                 y += self.size
                 x = 0
 
+    # old: (remove later)
+    def _draw(self, win):
+        from main import scene_position_to_view_port_position
+        for tile in self.TileL2 + self.TileL1:
+            # NOTE/TODO should we check for screen_check here?
+            projected_position = scene_position_to_view_port_position( (tile[1][0],tile[1][1]) )  
+            win.blit(tile[0], projected_position )
+    
     def draw(self, pl, win):
 
         drawing_layers(win, self.BGtiles, self.scroll)
@@ -64,6 +75,7 @@ class Tiledmap:
 
         drawing_layers(win, self.Assets, self.scroll)
         drawing_layers(win, self.TileL1, self.scroll)
+
 
     def camera(self, pl):
         speed = 10

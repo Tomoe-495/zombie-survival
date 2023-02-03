@@ -2,7 +2,8 @@ import pygame
 import sys
 from player import Player
 import tilemap
-
+from display import Display
+from camera import Camera
 
 W, H = 700, 400
 FPS = 60
@@ -11,9 +12,17 @@ SCALE = 1.7
 pygame.init()
 clock = pygame.time.Clock()
 
-win = pygame.display.set_mode((W*SCALE, H*SCALE), 0, 32)
-canvas = pygame.Surface( ( W, H ) )
-pygame.display.set_caption("Survival")
+Display.setup()
+
+
+def scene_position_to_view_port_position( scene_position ):
+
+    camera = Camera.get_camera()
+
+    return [
+        Display.view_port.get_rect().center[i] + scene_position[i] - camera[i]
+        for i in range(2)
+    ]
 
 
 def main():
@@ -22,22 +31,28 @@ def main():
     player = Player()
     tile = tilemap.Tiledmap()
 
+    Camera.follow( player )
+
     def draw(win):
         win.fill((144, 244, 200))
 
         # player will now be drawn with the tiles, cuz of layerings
         tile.draw(player, win)
 
-        pygame.display.update()
 
 
     while run:
         clock.tick(FPS)
 
-        draw(canvas)
-        win.blit( pygame.transform.scale( canvas, win.get_size() ), (0,0) )
+        draw( Display.view_port )
+        Display.sync_view_port_to_screen()
+        pygame.display.update()
 
         for event in pygame.event.get():
+
+            if event.type == pygame.VIDEORESIZE:
+                Display.on_resize( event.size )
+
             if event.type == pygame.QUIT:
                 run = False
             
@@ -62,7 +77,8 @@ def main():
         player.update(movement)
         player.platformer(movement, tile.tiles)
 
-        tile.camera(player)
+        Camera.step()
+        #tile.camera(player)
 
 
     sys.exit()
