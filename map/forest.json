@@ -68,7 +68,7 @@
 		},
 		{
 			"__type": "Tiles",
-			"identifier": "Tiles",
+			"identifier": "TilesExamples",
 			"type": "Tiles",
 			"uid": 5,
 			"doc": null,
@@ -228,7 +228,7 @@
 					"layerDefUid": 8,
 					"pxOffsetX": 0,
 					"pxOffsetY": 0,
-					"visible": true,
+					"visible": false,
 					"optionalRules": [],
 					"intGridCsv": [
 						0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -255,7 +255,7 @@
 					"entityInstances": []
 				},
 				{
-					"__identifier": "Tiles",
+					"__identifier": "TilesExamples",
 					"__type": "Tiles",
 					"__cWid": 23,
 					"__cHei": 24,
@@ -277,7 +277,6 @@
 					"seed": 9215615,
 					"overrideTilesetUid": 1,
 					"gridTiles": [
-						{ "px": [32,192], "src": [128,112], "f": 0, "t": 190, "d": [278] },
 						{ "px": [208,192], "src": [48,0], "f": 0, "t": 3, "d": [289] },
 						{ "px": [224,192], "src": [64,0], "f": 0, "t": 4, "d": [290] },
 						{ "px": [240,192], "src": [64,0], "f": 0, "t": 4, "d": [291] },
@@ -560,7 +559,7 @@
 					"layerDefUid": 9,
 					"pxOffsetX": 0,
 					"pxOffsetY": 0,
-					"visible": true,
+					"visible": false,
 					"optionalRules": [],
 					"intGridCsv": [],
 					"autoLayerTiles": [],
