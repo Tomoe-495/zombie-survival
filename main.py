@@ -23,10 +23,10 @@ def main():
     tile = tilemap.Tiledmap()
 
     def draw(win):
-        win.fill((180, 0, 60))
+        win.fill((144, 244, 200))
 
-        player.draw(win, tile.scroll)
-        tile.draw(win)
+        # player will now be drawn with the tiles, cuz of layerings
+        tile.draw(player, win)
 
         pygame.display.update()
 

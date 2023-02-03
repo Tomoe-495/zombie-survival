@@ -22,6 +22,10 @@ def get_tile_imgs(game_map, size, obj, img_name):
 
     return IMGs
 
+def drawing_layers(win, lis, scroll):
+    for tile in lis:
+        win.blit(tile[0], (tile[1][0] - scroll[0], tile[1][1] - scroll[1]))
+
 class Tiledmap:
     def __init__(self):
         self.color = (255,255,255)
@@ -35,7 +39,9 @@ class Tiledmap:
         #   the third parameter will the layer's name in LDtk
         #   the fourth parameter is the image's path
         self.TileL1 = get_tile_imgs(self.game_map, self.size, "TilesExamples", "map/TilesExamples.png")
-        self.TileL2 = get_tile_imgs(self.game_map, self.size, "Trees", "map/Trees.png")
+        self.Trees = get_tile_imgs(self.game_map, self.size, "Trees", "map/Trees.png")
+        self.BGtiles = get_tile_imgs(self.game_map, self.size, "Background", "map/TilesExamples.png")
+        self.Assets = get_tile_imgs(self.game_map, self.size, "Assets", "map/Tileset.png")
 
         csvMAP = get_obj(self.game_map, "Grid_set")
         x = 0
@@ -49,11 +55,15 @@ class Tiledmap:
                 y += self.size
                 x = 0
 
-    def draw(self, win):
-        for tile in self.TileL2:
-            win.blit(tile[0], (tile[1][0] - self.scroll[0], tile[1][1] - self.scroll[1]))
-        for tile in self.TileL1:
-            win.blit(tile[0], (tile[1][0] - self.scroll[0], tile[1][1] - self.scroll[1]))
+    def draw(self, pl, win):
+
+        drawing_layers(win, self.BGtiles, self.scroll)
+        drawing_layers(win, self.Trees, self.scroll)
+
+        pl.draw(win, self.scroll)
+
+        drawing_layers(win, self.Assets, self.scroll)
+        drawing_layers(win, self.TileL1, self.scroll)
 
     def camera(self, pl):
         speed = 10
