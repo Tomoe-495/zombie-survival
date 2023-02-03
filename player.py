@@ -5,7 +5,7 @@ class Player:
     def __init__(self):
         self.x = 100
         self.y = 100
-        self.image = pygame.Surface((30,50))
+        self.image = pygame.Surface((20, 30))
         self.rect = pygame.Rect(self.x, self.y, self.image.get_width(), self.image.get_height())
         self.right = False
         self.left = False

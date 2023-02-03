@@ -1,7 +1,7 @@
 import pygame
 
 INIT_VIEW_PORT_SIZE = (700,500)
-SCALE = 2
+SCALE = 1.7 # keep scale to 1.7 for now. later we might have config/option for it
 
 class Display:
 
