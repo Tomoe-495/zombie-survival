@@ -5,9 +5,8 @@ import tilemap
 from display import Display
 from camera import Camera
 
-W, H = 700, 400
+W, H = 1400, 800
 FPS = 60
-SCALE = 1.7
 
 pygame.init()
 clock = pygame.time.Clock()

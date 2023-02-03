@@ -10,13 +10,13 @@ class Player:
         self.right = False
         self.left = False
         self.speed = 0
-        self.max_speed = 5
+        self.max_speed = 2
         self.vel = 0
         self.acc = 0.5
         self.ACC = 0.4
         self.jump_count = 0
         self.jump_limit = 9
-        self.jump_power = -7
+        self.jump_power = -4
     
     def draw(self, win, scroll):
         from main import scene_position_to_view_port_position
