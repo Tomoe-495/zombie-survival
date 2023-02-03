@@ -22,7 +22,7 @@ def get_tile_imgs(game_map, size, obj, img_name):
 
     return IMGs
 
-def drawing_layers(win, lis, scroll):
+def drawing_layers(win, lis):
     from main import scene_position_to_view_port_position
     for tile in lis:
         projected_position = scene_position_to_view_port_position( (tile[1][0],tile[1][1]) )  
@@ -32,7 +32,7 @@ def drawing_layers(win, lis, scroll):
 class Tiledmap:
     def __init__(self):
         self.color = (255,255,255)
-        self.game_map = get_json('map/forest.json')["levels"][0]["layerInstances"]
+        self.game_map = get_json('map/swamp.ldtk')["levels"][0]["layerInstances"]
         self.tiles = []
         self.size = get_obj(self.game_map, "Grid_set")["__gridSize"]
         self.scroll = [0, 0]
@@ -41,10 +41,7 @@ class Tiledmap:
         #   the first 2 parameters will be the same for all
         #   the third parameter will the layer's name in LDtk
         #   the fourth parameter is the image's path
-        self.TileL1 = get_tile_imgs(self.game_map, self.size, "TilesExamples", "map/TilesExamples.png")
-        self.Trees = get_tile_imgs(self.game_map, self.size, "Trees", "map/Trees.png")
-        self.BGtiles = get_tile_imgs(self.game_map, self.size, "Background", "map/TilesExamples.png")
-        self.Assets = get_tile_imgs(self.game_map, self.size, "Assets", "map/Tileset.png")
+        self.TileL1 = get_tile_imgs(self.game_map, self.size, "Tiles", "map/Terrain_and_Props.png")
 
         csvMAP = get_obj(self.game_map, "Grid_set")
         x = 0
@@ -68,13 +65,9 @@ class Tiledmap:
     
     def draw(self, pl, win):
 
-        drawing_layers(win, self.BGtiles, self.scroll)
-        drawing_layers(win, self.Trees, self.scroll)
-
         pl.draw(win, self.scroll)
 
-        drawing_layers(win, self.Assets, self.scroll)
-        drawing_layers(win, self.TileL1, self.scroll)
+        drawing_layers(win, self.TileL1)
 
 
     def camera(self, pl):
