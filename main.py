@@ -27,8 +27,8 @@ def scene_position_to_view_port_position( scene_position ):
 def main():
     run = True
 
-    player = Player()
     tile = tilemap.Tiledmap()
+    player = Player()
 
     Camera.follow( player )
 

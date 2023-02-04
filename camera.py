@@ -17,7 +17,7 @@ class Camera:
 
 
     def get_target_position():
-        return pygame.math.Vector2( Camera._follow.rect.center )
+        return pygame.math.Vector2( Camera._follow.get_position() )
 
 
     def get_camera():

@@ -30,12 +30,22 @@ def drawing_layers(win, lis):
         #win.blit(tile[0], (tile[1][0] - scroll[0], tile[1][1] - scroll[1]))
 
 class Tiledmap:
+
+    current = None
+
     def __init__(self):
+
+        # --- let us assume for now that there can only be once Tiledmap at a time.
+        # store it in "current" for easy access.
+        Tiledmap.current = self
+        # --
+
         self.color = (255,255,255)
         self.game_map = get_json('map/swamp.ldtk')["levels"][0]["layerInstances"]
         self.tiles = []
         self.size = get_obj(self.game_map, "Grid_set")["__gridSize"]
         self.scroll = [0, 0]
+        self.cells = dict()
 
         #   just use this this func to get a 2D list of the images and their positions
         #   the first 2 parameters will be the same for all
@@ -43,17 +53,23 @@ class Tiledmap:
         #   the fourth parameter is the image's path
         self.TileL1 = get_tile_imgs(self.game_map, self.size, "Tiles", "map/Terrain_and_Props.png")
 
-        csvMAP = get_obj(self.game_map, "Grid_set")
+        self.csvMap = csvMAP = get_obj(self.game_map, "Grid_set")
         x = 0
         y = 0
+        cx = 0
+        cy = 0
         for block in csvMAP["intGridCsv"]:
             if block != 0:
                 self.tiles.append(pygame.Rect(x, y, self.size, self.size))
+                self.cells[(cx,cy)] = block
             x += self.size
+            cx += 1
 
             if x == self.size * csvMAP["__cWid"]:
                 y += self.size
                 x = 0
+                cx = 0
+                cy += 1
 
     # old: (remove later)
     def _draw(self, win):
@@ -62,6 +78,12 @@ class Tiledmap:
             # NOTE/TODO should we check for screen_check here?
             projected_position = scene_position_to_view_port_position( (tile[1][0],tile[1][1]) )  
             win.blit(tile[0], projected_position )
+
+
+
+    def get_cell( self, cell_position ):
+        #print(sorted(self.cells.keys()))
+        return self.cells.get( cell_position, 0)
     
     def draw(self, pl, win):
 
