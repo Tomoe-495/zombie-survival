@@ -47,7 +47,7 @@ class Tiledmap:
         x = 0
         y = 0
         for block in csvMAP["intGridCsv"]:
-            if block == 1:
+            if block != 0:
                 self.tiles.append(pygame.Rect(x, y, self.size, self.size))
             x += self.size
 
