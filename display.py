@@ -1,7 +1,7 @@
 import pygame
 
-W, H = 1400, 800
-w, h = W/4, H/4
+INIT_SCREEN_SIZE  = (1400,800)
+SCALE = 4
 
 class Display:
 
@@ -13,12 +13,25 @@ class Display:
     
 
         Display.screen = pygame.display.set_mode(
-            size = ( W, H ), 
+            size = INIT_SCREEN_SIZE, 
             flags = pygame.RESIZABLE,
             depth = 32
         )
+
+        if Display.screen.get_size() != INIT_SCREEN_SIZE:
+            print("Warning: requested screen size was {0}, but it ended up being {1}".format( INIT_SCREEN_SIZE, Display.screen.get_size() ))
+        
         pygame.display.set_caption("Survival")
-        Display.view_port = pygame.Surface( ( w, h ) )
+        
+        Display.refresh_view_port_size()
+
+
+    def refresh_view_port_size():
+        Display.view_port = pygame.Surface( Display.get_the_view_port_size_based_on_screen_size() )
+
+
+    def get_the_view_port_size_based_on_screen_size():
+        return [ Display.screen.get_size()[i] / SCALE for i in range(2) ]
 
 
     def sync_view_port_to_screen():
@@ -33,7 +46,6 @@ class Display:
 
 
     def on_resize(size):
-        W,H = size
-        Display.view_port = pygame.Surface( ( w, h ) )
+        Display.refresh_view_port_size()
 
 
