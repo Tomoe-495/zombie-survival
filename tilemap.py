@@ -44,7 +44,6 @@ class Tiledmap:
         self.game_map = get_json('map/swamp.ldtk')["levels"][0]["layerInstances"]
         self.tiles = []
         self.size = get_obj(self.game_map, "Grid_set")["__gridSize"]
-        self.scroll = [0, 0]
         self.cells = dict()
 
         #   just use this this func to get a 2D list of the images and their positions
@@ -87,12 +86,6 @@ class Tiledmap:
     
     def draw(self, pl, win):
 
-        pl.draw(win, self.scroll)
+        pl.draw(win)
 
         drawing_layers(win, self.TileL1)
-
-
-    def camera(self, pl):
-        speed = 10
-        self.scroll[0] += (pl.rect.x - self.scroll[0] - W/2) / speed
-        self.scroll[1] += (pl.rect.y - self.scroll[1] - H/2) / speed

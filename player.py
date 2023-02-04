@@ -164,7 +164,7 @@ class Player:
         #if v == 1:
         #    self.x_position = new_x_position
 
-    def draw( self, draw_at, scroll ):
+    def draw( self, draw_at):
         from main import scene_position_to_view_port_position
         pp = projected_position = scene_position_to_view_port_position( self.get_position() )  
  
