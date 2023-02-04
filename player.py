@@ -70,6 +70,9 @@ class Player:
         self.y_tile = 11 
         self.left = None
         self.right = None
+    
+    def jump( self ):
+        pass
 
     def get_stand_on_cell_value( self, x_position = None, y_tile_offset = 0 ):
         from tilemap import Tiledmap
