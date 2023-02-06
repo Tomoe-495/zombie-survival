@@ -17,7 +17,7 @@ def get_tile_imgs(game_map, size, obj, img_name):
     tileimg = Sprite(img_name)
 
     for tile in allTiles["gridTiles"]:
-        IMGs.append([tileimg.get_sprite(tile["src"], size), tile["px"]])
+        IMGs.append([pygame.transform.flip(tileimg.get_sprite(tile["src"], size), tile['f'], False), tile["px"]])
 
     return IMGs
 
