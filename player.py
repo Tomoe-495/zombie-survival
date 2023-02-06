@@ -66,8 +66,8 @@ class Player:
 
     def __init__( self ):
         from tilemap import Tiledmap
-        self.x_position = Tiledmap.current.size*5
-        self.y_tile = 11 
+        self.x_position = Tiledmap.current.size*19
+        self.y_tile = 9
         self.left = None
         self.right = None
     
