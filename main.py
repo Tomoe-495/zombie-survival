@@ -25,6 +25,10 @@ def scene_position_to_view_port_position( scene_position ):
 async def main():
     run = True
 
+    pygame.font.init()
+
+    font = pygame.font.Font(None,32)
+
     while run:
 
         # --- grab events
@@ -66,6 +70,11 @@ async def main():
         Display.view_port.fill((144, 244, 200))
         tile.draw(player, Display.view_port  )
         Display.sync_view_port_to_screen()
+
+        Display.screen.blit( 
+            font.render( str(round(clock.get_fps())), (0,0,0), True ),
+            (0,0),
+        )
         
         clock.tick(FPS)
         pygame.display.update()
