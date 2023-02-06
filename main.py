@@ -1,3 +1,4 @@
+import asyncio
 import pygame
 import sys
 from player import Player
@@ -5,16 +6,11 @@ import tilemap
 from display import Display
 from camera import Camera
 
-W, H = 1400, 800
 FPS = 60
-
-pygame.init()
-clock = pygame.time.Clock()
-
-Display.setup()
 
 
 def scene_position_to_view_port_position( scene_position ):
+
 
     camera = Camera.get_camera()
 
@@ -24,29 +20,14 @@ def scene_position_to_view_port_position( scene_position ):
     ]
 
 
-def main():
+
+
+async def main():
     run = True
 
-    tile = tilemap.Tiledmap()
-    player = Player()
-
-    Camera.follow( player )
-
-    def draw(win):
-        win.fill((144, 244, 200))
-
-        # player will now be drawn with the tiles, cuz of layerings
-        tile.draw(player, win)
-
-
-
     while run:
-        clock.tick(FPS)
 
-        draw( Display.view_port )
-        Display.sync_view_port_to_screen()
-        pygame.display.update()
-
+        # --- grab events
         for event in pygame.event.get():
 
             if event.type == pygame.VIDEORESIZE:
@@ -70,17 +51,51 @@ def main():
                     player.left = False
                 if event.key == pygame.K_RIGHT:
                     player.right = False
-        
+        # ---        
+
+        # --- game logic        
         movement = [0, 0]
 
         player.update(movement)
         player.platformer(movement, tile.tiles)
 
         Camera.step()
-        #tile.camera(player)
+        # ---
 
+        # --- draw and sync logic
+        Display.view_port.fill((144, 244, 200))
+        tile.draw(player, Display.view_port  )
+        Display.sync_view_port_to_screen()
+        
+        clock.tick(FPS)
+        pygame.display.update()
+
+        await asyncio.sleep(0)
+        # ---
 
     sys.exit()
 
+
+
 if __name__ == "__main__":
-    main()
+
+    pygame.init()
+    clock = pygame.time.Clock()
+
+    Display.setup()
+
+
+
+    tile = tilemap.Tiledmap()
+    player = Player()
+
+    Camera.follow( player )
+
+
+
+    asyncio.run( main() )
+
+
+
+
+

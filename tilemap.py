@@ -1,7 +1,6 @@
 import pygame
 import json
 from spritesheet import Sprite
-from main import W, H
 
 def get_json(filename):
     with open(filename, 'r') as f:
