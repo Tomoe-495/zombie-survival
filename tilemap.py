@@ -16,10 +16,29 @@ def get_tile_imgs(game_map, size, obj, img_name):
     allTiles = get_obj(game_map, obj)
     tileimg = Sprite(img_name)
 
-    for tile in allTiles["gridTiles"]:
-        IMGs.append([pygame.transform.flip(tileimg.get_sprite(tile["src"], size), tile['f'], False), tile["px"]])
 
-    return IMGs
+    min_x, min_y, max_x, max_y = float('inf'), float('inf'), float('-inf'), float('-inf')
+    for tile in allTiles["gridTiles"]:
+        tp = tile_position = tile["px"]
+        if tp[0] < min_x: min_x = tp[0]
+        if tp[0] > max_x: max_x = tp[0]
+        if tp[1] < min_y: min_y = tp[1]
+        if tp[1] > max_y: max_y = tp[1]
+
+    layer_size = ( max_x - min_x ) + size, ( max_y - min_y ) + size
+    layer = pygame.Surface( layer_size )
+    layer.fill( (144,244,200) )
+    for tile in allTiles["gridTiles"]:
+
+        tile_surface = pygame.transform.flip(tileimg.get_sprite(tile["src"], size), tile['f'], False)
+        tile_position = tile["px"]
+        IMGs.append([tile_surface, tile_position])
+        layer.blit( tile_surface, tile_position )
+    
+
+
+    return IMGs, layer
+
 
 def drawing_layers(win, lis):
     from main import scene_position_to_view_port_position
@@ -49,7 +68,7 @@ class Tiledmap:
         #   the first 2 parameters will be the same for all
         #   the third parameter will the layer's name in LDtk
         #   the fourth parameter is the image's path
-        self.TileL1 = get_tile_imgs(self.game_map, self.size, "Tiles", "map/Terrain_and_Props.png")
+        self.TileL1, self.layer1 = get_tile_imgs(self.game_map, self.size, "Tiles", "map/Terrain_and_Props.png")
 
         self.csvMap = csvMAP = get_obj(self.game_map, "Grid_set")
         x = 0
@@ -85,6 +104,15 @@ class Tiledmap:
     
     def draw(self, pl, win):
 
-        pl.draw(win)
 
-        drawing_layers(win, self.TileL1)
+        #drawing_layers(win, self.TileL1)
+
+        from main import scene_position_to_view_port_position
+
+        pp = projected_position = scene_position_to_view_port_position( (0,0) )  
+
+        win.blit(self.layer1,pp)
+
+
+
+        pl.draw(win)

@@ -6,7 +6,7 @@ import tilemap
 from display import Display
 from camera import Camera
 
-FPS = 60
+FPS = 600
 
 
 def scene_position_to_view_port_position( scene_position ):
@@ -67,7 +67,7 @@ async def main():
         # ---
 
         # --- draw and sync logic
-        Display.view_port.fill((144, 244, 200))
+        Display.view_port.fill((100, 244, 200))
         tile.draw(player, Display.view_port  )
         Display.sync_view_port_to_screen()
 
