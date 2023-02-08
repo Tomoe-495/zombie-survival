@@ -4,6 +4,8 @@ from player import Player
 import tilemap
 from display import Display
 from camera import Camera
+from rain import Rain
+from frame_counter import FrameCounter
 
 W, H = 1400, 800
 FPS = 60
@@ -12,6 +14,8 @@ pygame.init()
 clock = pygame.time.Clock()
 
 Display.setup()
+
+       
 
 
 def scene_position_to_view_port_position( scene_position ):
@@ -33,7 +37,9 @@ def main():
     Camera.follow( player )
 
     def draw(win):
-        win.fill((144, 244, 200))
+        win.fill((11,22,33))
+
+        Rain.draw(win)
 
         # player will now be drawn with the tiles, cuz of layerings
         tile.draw(player, win)
@@ -41,6 +47,8 @@ def main():
 
 
     while run:
+        
+
         clock.tick(FPS)
 
         draw( Display.view_port )
@@ -79,6 +87,8 @@ def main():
         Camera.step()
         #tile.camera(player)
 
+
+        FrameCounter.step_frame()
 
     sys.exit()
 
