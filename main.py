@@ -6,7 +6,7 @@ import tilemap
 from display import Display
 from camera import Camera
 
-FPS = 600
+FPS = 60
 
 
 def scene_position_to_view_port_position( scene_position ):
